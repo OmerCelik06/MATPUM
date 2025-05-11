@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okul Haritası - Kampüs Yerleşim Planı</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Okul kampüsünün interaktif haritası. Binaların konumlarını, kat planlarını ve detaylı bilgileri görüntüleyin.">
+    <meta name="keywords" content="okul haritası, kampüs haritası, bina konumları, okul yerleşim planı">
+    <meta name="author" content="Okul Yönetimi">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Okul Haritası</h1>
+    </header>
+    
+    <main>
+        <div id="map"></div>
+        <div id="info-panel">
+            <h2>Bina Bilgileri</h2>
+            <div id="building-info"></div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Okul Yönetimi. Tüm hakları saklıdır.</p>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="dist/script.js"></script>
+</body>
+</html> 
