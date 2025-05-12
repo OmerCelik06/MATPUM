@@ -24,11 +24,22 @@
     
     <main>
         <div id="map"></div>
-        <div id="info-panel">
-            <h2>Bina Bilgileri</h2>
-            <div id="building-info"></div>
-        </div>
     </main>
+    
+    <!-- Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="buildingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <button class="close-button" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img class="modal-image" id="modalImage" src="" alt="">
+                <p class="modal-description" id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
     
     <footer>
         <p>&copy; 2024 Okul Yönetimi. Tüm hakları saklıdır.</p>
