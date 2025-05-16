@@ -69,7 +69,7 @@ const subSections = {
     // Matematik Bölümü
     'matematik-1': {
         title: 'Erişilebilirlik',
-        description: 'Matematik Bölümü binası engelli erişimine uygun olarak tasarlanmıştır. Asansör ve rampalar mevcuttur.',
+        description: 'Matematik Bölümü binasında asansör bulunmamaktadır. Bina girişi rampa ile erişilebilir durumdadır.',
         imageUrl: 'matematik-erisim.jpg'
     },
     'matematik-2': {
