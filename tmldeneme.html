@@ -18,6 +18,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <h1>Okul Haritası</h1>
+    </header>
+
     <div id="map"></div>
     
     <!-- Menü Butonu -->
@@ -27,11 +32,60 @@
     <div id="sidePanel" class="side-panel">
         <button id="closePanel" class="close-panel">×</button>
         <div class="panel-content">
-            <button class="building-option" data-building="fizik">Fizik Bölümü</button>
-            <button class="building-option" data-building="matematik">Matematik Bölümü</button>
-            <button class="building-option" data-building="endustri">Endüstri Mühendisliği</button>
-            <button class="building-option" data-building="bilgisayar">Bilgisayar Mühendisliği</button>
-            <button class="building-option" data-building="yuksel">Yüksel Proje Amfisi</button>
+            <!-- Fizik Bölümü -->
+            <div class="building-section">
+                <button class="building-option" data-building="fizik">Fizik Bölümü</button>
+                <div class="sub-sections">
+                    <button class="sub-section" data-section="fizik-1">Erişilebilirlik</button>
+                    <button class="sub-section" data-section="fizik-2">Çalışma Salonları ve Bilgisayar Laboratuvarları</button>
+                    <button class="sub-section" data-section="fizik-3">Kantin ve Otomatlar</button>
+                    <button class="sub-section" data-section="fizik-4">Geri Dönüşüm</button>
+                </div>
+            </div>
+
+            <!-- Matematik Bölümü -->
+            <div class="building-section">
+                <button class="building-option" data-building="matematik">Matematik Bölümü</button>
+                <div class="sub-sections">
+                    <button class="sub-section" data-section="matematik-1">Erişilebilirlik</button>
+                    <button class="sub-section" data-section="matematik-2">Çalışma Salonları ve Bilgisayar Laboratuvarları</button>
+                    <button class="sub-section" data-section="matematik-3">Kantin ve Otomatlar</button>
+                    <button class="sub-section" data-section="matematik-4">Geri Dönüşüm</button>
+                </div>
+            </div>
+
+            <!-- Endüstri Mühendisliği -->
+            <div class="building-section">
+                <button class="building-option" data-building="endustri">Endüstri Mühendisliği</button>
+                <div class="sub-sections">
+                    <button class="sub-section" data-section="endustri-1">Erişilebilirlik</button>
+                    <button class="sub-section" data-section="endustri-2">Çalışma Salonları ve Bilgisayar Laboratuvarları</button>
+                    <button class="sub-section" data-section="endustri-3">Kantin ve Otomatlar</button>
+                    <button class="sub-section" data-section="endustri-4">Geri Dönüşüm</button>
+                </div>
+            </div>
+
+            <!-- Bilgisayar Mühendisliği -->
+            <div class="building-section">
+                <button class="building-option" data-building="bilgisayar">Bilgisayar Mühendisliği</button>
+                <div class="sub-sections">
+                    <button class="sub-section" data-section="bilgisayar-1">Erişilebilirlik</button>
+                    <button class="sub-section" data-section="bilgisayar-2">Çalışma Salonları ve Bilgisayar Laboratuvarları</button>
+                    <button class="sub-section" data-section="bilgisayar-3">Kantin ve Otomatlar</button>
+                    <button class="sub-section" data-section="bilgisayar-4">Geri Dönüşüm</button>
+                </div>
+            </div>
+
+            <!-- Yüksel Proje Amfisi -->
+            <div class="building-section">
+                <button class="building-option" data-building="yuksel">Yüksel Proje Amfisi</button>
+                <div class="sub-sections">
+                    <button class="sub-section" data-section="yuksel-1">Erişilebilirlik</button>
+                    <button class="sub-section" data-section="yuksel-2">Çalışma Salonları ve Bilgisayar Laboratuvarları</button>
+                    <button class="sub-section" data-section="yuksel-3">Kantin ve Otomatlar</button>
+                    <button class="sub-section" data-section="yuksel-4">Geri Dönüşüm</button>
+                </div>
+            </div>
         </div>
     </div>
 

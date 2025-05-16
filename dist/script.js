@@ -43,6 +43,114 @@ let menuButton;
 let sidePanel;
 let closePanelButton;
 let polygons = {};
+// Alt seksiyon verileri
+const subSections = {
+    // Fizik Bölümü
+    'fizik-1': {
+        title: 'Erişilebilirlik',
+        description: 'Fizik Bölümü binası engelli erişimine uygun olarak tasarlanmıştır. Asansör ve rampalar mevcuttur.',
+        imageUrl: 'fizik-erisim.jpg'
+    },
+    'fizik-2': {
+        title: 'Çalışma Salonları ve Bilgisayar Laboratuvarları',
+        description: 'Modern bilgisayar laboratuvarları ve geniş çalışma salonları öğrencilerin kullanımına açıktır.',
+        imageUrl: 'fizik-lab.jpg'
+    },
+    'fizik-3': {
+        title: 'Kantin ve Otomatlar',
+        description: 'Bina içerisinde kantin ve çeşitli otomatlar bulunmaktadır.',
+        imageUrl: 'fizik-kantin.jpg'
+    },
+    'fizik-4': {
+        title: 'Geri Dönüşüm',
+        description: 'Bina içerisinde geri dönüşüm noktaları bulunmaktadır.',
+        imageUrl: 'fizik-geri-donusum.jpg'
+    },
+    // Matematik Bölümü
+    'matematik-1': {
+        title: 'Erişilebilirlik',
+        description: 'Matematik Bölümü binası engelli erişimine uygun olarak tasarlanmıştır. Asansör ve rampalar mevcuttur.',
+        imageUrl: 'matematik-erisim.jpg'
+    },
+    'matematik-2': {
+        title: 'Çalışma Salonları ve Bilgisayar Laboratuvarları',
+        description: 'Modern bilgisayar laboratuvarları ve geniş çalışma salonları öğrencilerin kullanımına açıktır.',
+        imageUrl: 'matematik-lab.jpg'
+    },
+    'matematik-3': {
+        title: 'Kantin ve Otomatlar',
+        description: 'Bina içerisinde kantin ve çeşitli otomatlar bulunmaktadır.',
+        imageUrl: 'matematik-kantin.jpg'
+    },
+    'matematik-4': {
+        title: 'Geri Dönüşüm',
+        description: 'Bina içerisinde geri dönüşüm noktaları bulunmaktadır.',
+        imageUrl: 'matematik-geri-donusum.jpg'
+    },
+    // Endüstri Mühendisliği
+    'endustri-1': {
+        title: 'Erişilebilirlik',
+        description: 'Endüstri Mühendisliği binası engelli erişimine uygun olarak tasarlanmıştır. Asansör ve rampalar mevcuttur.',
+        imageUrl: 'endustri-erisim.jpg'
+    },
+    'endustri-2': {
+        title: 'Çalışma Salonları ve Bilgisayar Laboratuvarları',
+        description: 'Modern bilgisayar laboratuvarları ve geniş çalışma salonları öğrencilerin kullanımına açıktır.',
+        imageUrl: 'endustri-lab.jpg'
+    },
+    'endustri-3': {
+        title: 'Kantin ve Otomatlar',
+        description: 'Bina içerisinde kantin ve çeşitli otomatlar bulunmaktadır.',
+        imageUrl: 'endustri-kantin.jpg'
+    },
+    'endustri-4': {
+        title: 'Geri Dönüşüm',
+        description: 'Bina içerisinde geri dönüşüm noktaları bulunmaktadır.',
+        imageUrl: 'endustri-geri-donusum.jpg'
+    },
+    // Bilgisayar Mühendisliği
+    'bilgisayar-1': {
+        title: 'Erişilebilirlik',
+        description: 'Bilgisayar Mühendisliği binası engelli erişimine uygun olarak tasarlanmıştır. Asansör ve rampalar mevcuttur.',
+        imageUrl: 'bilgisayar-erisim.jpg'
+    },
+    'bilgisayar-2': {
+        title: 'Çalışma Salonları ve Bilgisayar Laboratuvarları',
+        description: 'Modern bilgisayar laboratuvarları ve geniş çalışma salonları öğrencilerin kullanımına açıktır.',
+        imageUrl: 'bilgisayar-lab.jpg'
+    },
+    'bilgisayar-3': {
+        title: 'Kantin ve Otomatlar',
+        description: 'Bina içerisinde kantin ve çeşitli otomatlar bulunmaktadır.',
+        imageUrl: 'bilgisayar-kantin.jpg'
+    },
+    'bilgisayar-4': {
+        title: 'Geri Dönüşüm',
+        description: 'Bina içerisinde geri dönüşüm noktaları bulunmaktadır.',
+        imageUrl: 'bilgisayar-geri-donusum.jpg'
+    },
+    // Yüksel Proje Amfisi
+    'yuksel-1': {
+        title: 'Erişilebilirlik',
+        description: 'Yüksel Proje Amfisi engelli erişimine uygun olarak tasarlanmıştır. Asansör ve rampalar mevcuttur.',
+        imageUrl: 'yuksel-erisim.jpg'
+    },
+    'yuksel-2': {
+        title: 'Çalışma Salonları ve Bilgisayar Laboratuvarları',
+        description: 'Modern bilgisayar laboratuvarları ve geniş çalışma salonları öğrencilerin kullanımına açıktır.',
+        imageUrl: 'yuksel-lab.jpg'
+    },
+    'yuksel-3': {
+        title: 'Kantin ve Otomatlar',
+        description: 'Bina içerisinde kantin ve çeşitli otomatlar bulunmaktadır.',
+        imageUrl: 'yuksel-kantin.jpg'
+    },
+    'yuksel-4': {
+        title: 'Geri Dönüşüm',
+        description: 'Bina içerisinde geri dönüşüm noktaları bulunmaktadır.',
+        imageUrl: 'yuksel-geri-donusum.jpg'
+    }
+};
 // Polygon'ları gizleme fonksiyonu
 function hideAllPolygons() {
     Object.values(polygons).forEach((polygon) => {
@@ -82,6 +190,13 @@ function toggleSidePanel() {
 }
 // Bina seçme
 function selectBuilding(buildingId) {
+    // Tüm bina bölümlerini güncelle
+    document.querySelectorAll('.building-section').forEach(section => {
+        section.classList.remove('active');
+        if (section.querySelector(`[data-building="${buildingId}"]`)) {
+            section.classList.add('active');
+        }
+    });
     // Aktif butonu güncelle
     document.querySelectorAll('.building-option').forEach(button => {
         button.classList.remove('active');
@@ -91,6 +206,26 @@ function selectBuilding(buildingId) {
     });
     // Seçili binayı göster
     showPolygon(buildingId);
+}
+// Alt seksiyon seçme fonksiyonu
+function selectSubSection(sectionId) {
+    const subSection = subSections[sectionId];
+    if (subSection) {
+        // Aktif alt seksiyon butonunu güncelle
+        document.querySelectorAll('.sub-section').forEach(button => {
+            button.classList.remove('active');
+            if (button.getAttribute('data-section') === sectionId) {
+                button.classList.add('active');
+            }
+        });
+        // Modal'ı aç
+        openModal({
+            name: subSection.title,
+            position: { lat: 0, lng: 0 }, // Bu değerler kullanılmayacak
+            description: subSection.description,
+            imageUrl: subSection.imageUrl
+        });
+    }
 }
 // Haritayı başlatma fonksiyonu
 function initMap() {
@@ -318,6 +453,15 @@ function initMap() {
             const building = buildings.find(b => b.name.toLowerCase().includes(id));
             if (building) {
                 openModal(building);
+            }
+        });
+    });
+    // Alt seksiyonlar için event listener'lar
+    document.querySelectorAll('.sub-section').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const sectionId = e.target.getAttribute('data-section');
+            if (sectionId) {
+                selectSubSection(sectionId);
             }
         });
     });
