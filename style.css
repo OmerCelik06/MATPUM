@@ -6,13 +6,141 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    background-color: #f5f5f5;
-    color: #333;
-    height: 100vh;
-    width: 100vw;
+    font-family: Arial, sans-serif;
     overflow: hidden;
+}
+
+#map {
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* Menü Butonu */
+.menu-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Yan Panel */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background: white;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
+
+.side-panel.active {
+    left: 0;
+}
+
+.close-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.panel-content {
+    padding: 20px;
+}
+
+/* Bina Seçenekleri */
+.building-option {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    background: #f8f9fa;
+    border: none;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.building-option:hover {
+    background: #e9ecef;
+}
+
+.building-option.active {
+    background: #007bff;
+    color: white;
+}
+
+/* Modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 2001;
+    max-width: 500px;
+    width: 90%;
+}
+
+.modal-content {
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+#modalTitle {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#modalImage {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+#modalDescription {
+    color: #666;
+    line-height: 1.6;
 }
 
 /* Header styles */

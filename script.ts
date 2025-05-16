@@ -17,6 +17,7 @@ interface LeafletPolygon {
     addTo(map: any): any;
     bindPopup(content: string): any;
     on(event: string, callback: () => void): void;
+    setStyle(style: any): void;
 }
 
 interface Leaflet {
@@ -42,16 +43,34 @@ interface Building {
 // Bina verileri
 const buildings: Building[] = [
     {
-        name: "Ana Bina",
-        position: { lat: 39.89764966170611, lng: 32.77806978990851 }, // Okulunuzun koordinatları
-        description: "Ana bina açıklaması buraya gelecek",
-        imageUrl: "ana-bina.jpg" // Bina fotoğrafının URL'si
+        name: "Fizik Bölümü",
+        position: { lat: 39.89453348513425, lng: 32.78230002932196 },
+        description: "Fizik bölümü ve laboratuvarları bu alanda bulunmaktadır. Modern laboratuvarlar ve araştırma merkezleri ile öğrencilere en iyi eğitim imkanlarını sunmaktadır.",
+        imageUrl: "fizik-bina.jpg"
     },
     {
         name: "Matematik Bölümü",
-        position: { lat: 39.89579455062533, lng: 32.78239681570757 },
-        description: "Açıklama",
+        position: { lat: 39.895321189073, lng: 32.78204972297499 },
+        description: "Matematik bölümü ve derslikleri bu alanda bulunmaktadır. Modern eğitim imkanları ve geniş derslikler ile öğrencilere kapsamlı bir eğitim sunmaktadır.",
         imageUrl: "matematik-bina.jpg"
+    },
+    {
+        name: "Endüstri Mühendisliği",
+        position: { lat: 39.89206823750135, lng: 32.78163680254903 },
+        description: "Endüstri Mühendisliği bölümü ve laboratuvarları bu alanda bulunmaktadır. Modern eğitim ve araştırma imkanları ile öğrencilere kapsamlı bir eğitim sunmaktadır.",
+        imageUrl: "endustri-bina.jpg"
+    },
+    {
+        name: "Bilgisayar Mühendisliği",
+        position: { lat: 39.89167028453943, lng: 32.78352452069339 },
+        description: "Bilgisayar Mühendisliği bölümü ve laboratuvarları bu alanda bulunmaktadır. Modern bilgisayar laboratuvarları ve araştırma merkezleri ile öğrencilere en iyi eğitim imkanlarını sunmaktadır.",
+        imageUrl: "bilgisayar-bina.jpg"
+    },
+    {
+        name: "Yüksel Proje Amfisi",
+        position: { lat: 39.88773097478301, lng: 32.781573964792585 },
+        description: "Yüksel Proje Amfisi, öğrenci projeleri ve etkinlikler için kullanılan modern bir amfidir. Geniş oturma alanı ve modern teknik altyapısı ile çeşitli etkinliklere ev sahipliği yapmaktadır.",
+        imageUrl: "yuksel-proje.jpg"
     }
 ];
 
@@ -62,6 +81,32 @@ let modalTitle: HTMLElement;
 let modalImage: HTMLImageElement;
 let modalDescription: HTMLElement;
 let closeButton: HTMLElement;
+let menuButton: HTMLElement;
+let sidePanel: HTMLElement;
+let closePanelButton: HTMLElement;
+let polygons: { [key: string]: any } = {};
+
+// Polygon'ları gizleme fonksiyonu
+function hideAllPolygons(): void {
+    Object.values(polygons).forEach((polygon: LeafletPolygon) => {
+        polygon.setStyle({ opacity: 0, fillOpacity: 0 });
+    });
+}
+
+// Seçili polygon'u gösterme fonksiyonu
+function showPolygon(buildingId: string): void {
+    hideAllPolygons();
+    if (polygons[buildingId]) {
+        polygons[buildingId].setStyle({ opacity: 1, fillOpacity: 0.4 });
+    }
+}
+
+// Tüm polygon'ları gösterme fonksiyonu
+function showAllPolygons(): void {
+    Object.values(polygons).forEach((polygon: LeafletPolygon) => {
+        polygon.setStyle({ opacity: 1, fillOpacity: 0.4 });
+    });
+}
 
 // Modal'ı açma fonksiyonu
 function openModal(building: Building): void {
@@ -80,9 +125,28 @@ function closeModal(): void {
     overlay.style.display = 'none';
 }
 
+// Yan paneli açma/kapama
+function toggleSidePanel(): void {
+    sidePanel.classList.toggle('active');
+}
+
+// Bina seçme
+function selectBuilding(buildingId: string): void {
+    // Aktif butonu güncelle
+    document.querySelectorAll('.building-option').forEach(button => {
+        button.classList.remove('active');
+        if (button.getAttribute('data-building') === buildingId) {
+            button.classList.add('active');
+        }
+    });
+
+    // Seçili binayı göster
+    showPolygon(buildingId);
+}
+
 // Haritayı başlatma fonksiyonu
 function initMap(): void {
-    // Harita merkezi (okulunuzun koordinatları)
+    // Harita merkezi
     const center: [number, number] = [39.89764966170611, 32.77806978990851];
 
     // Harita oluşturma
@@ -100,10 +164,25 @@ function initMap(): void {
     modalImage = document.getElementById('modalImage') as HTMLImageElement;
     modalDescription = document.getElementById('modalDescription') as HTMLElement;
     closeButton = document.getElementById('closeModal') as HTMLElement;
+    menuButton = document.getElementById('menuButton') as HTMLElement;
+    sidePanel = document.getElementById('sidePanel') as HTMLElement;
+    closePanelButton = document.getElementById('closePanel') as HTMLElement;
 
-    // Kapatma butonuna tıklama olayı ekle
+    // Event listener'ları ekle
     closeButton.addEventListener('click', closeModal);
     overlay.addEventListener('click', closeModal);
+    menuButton.addEventListener('click', toggleSidePanel);
+    closePanelButton.addEventListener('click', toggleSidePanel);
+
+    // Bina seçenekleri için event listener'lar
+    document.querySelectorAll('.building-option').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const buildingId = (e.target as HTMLElement).getAttribute('data-building');
+            if (buildingId) {
+                selectBuilding(buildingId);
+            }
+        });
+    });
 
     // Fizik Bölümü koordinatları
     const fizikBinasi: [number, number][] = [
@@ -260,93 +339,54 @@ function initMap(): void {
         [39.88778623465737, 32.78218011964506]
     ];
 
-    // Fizik Bölümü Polygon'u
+    // Polygon'ları oluştur ve sakla
     const fizikPolygon = L.polygon(fizikBinasi, {
         color: "#ff7800",
         weight: 3,
         fillColor: "#ffcc99",
         fillOpacity: 0.4
     }).addTo(map);
+    polygons['fizik'] = fizikPolygon;
 
-    // Endüstri Mühendisliği Polygon'u
     const endustriPolygon = L.polygon(endustriBinasi, {
         color: "#2ecc71",
         weight: 3,
         fillColor: "#a9dfbf",
         fillOpacity: 0.4
     }).addTo(map);
+    polygons['endustri'] = endustriPolygon;
 
-    // Matematik Bölümü Polygon'u
     const matematikPolygon = L.polygon(matematikBinasi, {
         color: "#3498db",
         weight: 3,
         fillColor: "#aed6f1",
         fillOpacity: 0.4
     }).addTo(map);
+    polygons['matematik'] = matematikPolygon;
 
-    // Bilgisayar Mühendisliği Polygon'u
     const bilgisayarPolygon = L.polygon(bilgisayarBinasi, {
         color: "#9b59b6",
         weight: 3,
         fillColor: "#d2b4de",
         fillOpacity: 0.4
     }).addTo(map);
+    polygons['bilgisayar'] = bilgisayarPolygon;
 
-    // Yüksel Proje Amfisi Polygon'u
     const yukselProjePolygon = L.polygon(yukselProje, {
         color: "#e74c3c",
         weight: 3,
         fillColor: "#f5b7b1",
         fillOpacity: 0.4
     }).addTo(map);
+    polygons['yuksel'] = yukselProjePolygon;
 
-    // Polygon'a tıklama olayı ekleme
-    fizikPolygon.on('click', () => {
-        openModal({
-            name: "Fizik Bölümü",
-            position: { lat: 39.89453348513425, lng: 32.78230002932196 },
-            description: "Fizik bölümü ve laboratuvarları bu alanda bulunmaktadır. Modern laboratuvarlar ve araştırma merkezleri ile öğrencilere en iyi eğitim imkanlarını sunmaktadır.",
-            imageUrl: "fizik-bina.jpg"
-        });
-    });
-
-    // Endüstri Mühendisliği Polygon'una tıklama olayı ekleme
-    endustriPolygon.on('click', () => {
-        openModal({
-            name: "Endüstri Mühendisliği Binası",
-            position: { lat: 39.89206823750135, lng: 32.78163680254903 },
-            description: "Endüstri Mühendisliği bölümü ve laboratuvarları bu alanda bulunmaktadır. Modern eğitim ve araştırma imkanları ile öğrencilere kapsamlı bir eğitim sunmaktadır.",
-            imageUrl: "endustri-bina.jpg"
-        });
-    });
-
-    // Matematik Bölümü Polygon'una tıklama olayı ekleme
-    matematikPolygon.on('click', () => {
-        openModal({
-            name: "Matematik Bölümü Binası",
-            position: { lat: 39.895321189073, lng: 32.78204972297499 },
-            description: "Matematik bölümü ve derslikleri bu alanda bulunmaktadır. Modern eğitim imkanları ve geniş derslikler ile öğrencilere kapsamlı bir eğitim sunmaktadır.",
-            imageUrl: "matematik-bina.jpg"
-        });
-    });
-
-    // Bilgisayar Mühendisliği Polygon'una tıklama olayı ekleme
-    bilgisayarPolygon.on('click', () => {
-        openModal({
-            name: "Bilgisayar Mühendisliği Bölümü",
-            position: { lat: 39.89167028453943, lng: 32.78352452069339 },
-            description: "Bilgisayar Mühendisliği bölümü ve laboratuvarları bu alanda bulunmaktadır. Modern bilgisayar laboratuvarları ve araştırma merkezleri ile öğrencilere en iyi eğitim imkanlarını sunmaktadır.",
-            imageUrl: "bilgisayar-bina.jpg"
-        });
-    });
-
-    // Yüksel Proje Amfisi Polygon'una tıklama olayı ekleme
-    yukselProjePolygon.on('click', () => {
-        openModal({
-            name: "Yüksel Proje Amfisi",
-            position: { lat: 39.88773097478301, lng: 32.781573964792585 },
-            description: "Yüksel Proje Amfisi, öğrenci projeleri ve etkinlikler için kullanılan modern bir amfidir. Geniş oturma alanı ve modern teknik altyapısı ile çeşitli etkinliklere ev sahipliği yapmaktadır.",
-            imageUrl: "yuksel-proje.jpg"
+    // Polygon click event'lerini ekle
+    Object.entries(polygons).forEach(([id, polygon]: [string, LeafletPolygon]) => {
+        polygon.on('click', () => {
+            const building = buildings.find(b => b.name.toLowerCase().includes(id));
+            if (building) {
+                openModal(building);
+            }
         });
     });
 }
