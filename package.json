@@ -1,12 +1,36 @@
 {
-  "name": "yenideneme",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "kampüs-haritasi",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [],
+  "keywords": [
+    "kampüs",
+    "harita",
+    "odtü"
+  ],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucomon/MATPUM.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lucomon/MATPUM/issues"
+  },
+  "homepage": "https://github.com/lucomon/MATPUM#readme",
+  "description": "ODTÜ Kampüs Haritası - Binaların konumları, kat planları ve detaylı bilgiler",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7",
+    "vite-plugin-api-routes": "^1.2.4-beta"
+  }
 }
