@@ -105,9 +105,70 @@
     <div id="buildingModal" class="modal">
         <div class="modal-content">
             <span id="closeModal" class="close">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <img id="modalImage" src="" alt="">
-            <p id="modalDescription"></p>
+            <h2 id="buildingTitle"></h2>
+            <div class="modal-container">
+                <div class="modal-sidebar">
+                    <button class="sidebar-toggle">☰</button>
+                    <div class="sidebar-menu">
+                        <button class="menu-item active" data-page="page1">Çalışma Salonları</button>
+                        <button class="menu-item" data-page="page2">Erişilebilirlik</button>
+                        <button class="menu-item" data-page="page3">Kantin ve Otomatlar</button>
+                        <button class="menu-item" data-page="page4">Geri Dönüşüm</button>
+                    </div>
+                </div>
+                <div id="buildingContent">
+                    <div class="modal-page active" id="page1">
+                        <table class="info-table">
+                            <thead>
+                                <tr>
+                                    <th>Çalışma Salonu</th>
+                                    <th>Kapasite</th>
+                                    <th>Bölüme Özel Alan</th>
+                                    <th>PC Durumu</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salonTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-page" id="page2">
+                        <table class="info-table">
+                            <thead>
+                                <tr>
+                                    <th>Asansör Sayısı</th>
+                                    <th>Rampa Sayısı</th>
+                                    <th>Erişilebilirlik Derecesi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="erisilebilirlikTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-page" id="page3">
+                        <table class="info-table">
+                            <thead>
+                                <tr>
+                                    <th>Kantin Menüsü</th>
+                                    <th>Otomat Sayısı</th>
+                                </tr>
+                            </thead>
+                            <tbody id="kantinTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-page" id="page4">
+                        <table class="info-table">
+                            <thead>
+                                <tr>
+                                    <th>Geri Dönüşüm Kutuları</th>
+                                </tr>
+                            </thead>
+                            <tbody id="geriDonusumTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

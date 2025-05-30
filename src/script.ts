@@ -220,7 +220,7 @@ function showPolygon(buildingId: string): void {
 // Tüm polygon'ları gösterme fonksiyonu
 function showAllPolygons(): void {
     Object.values(polygons).forEach((polygon: LeafletPolygon) => {
-        polygon.setStyle({ opacity: 1, fillOpacity: 0.4 });
+        polygon.setStyle({ opacity: 1,fillColor: 'red', fillOpacity: 0.4 });
     });
 }
 
@@ -385,54 +385,7 @@ function initMap(): void {
         [39.895389901144284, 32.78203715313094]
     ];
 
-    // Bilgisayar Mühendisliği koordinatları
-    const bilgisayarBinasi: [number, number][] = [
-        [39.89167028453943, 32.78352452069339],
-        [39.891691629072795, 32.78379797779283],
-        [39.89175475435667, 32.78379087501105],
-        [39.891755208495226, 32.7838092238635],
-        [39.8917688326498, 32.78381869423953],
-        [39.89179426439671, 32.78381159145778],
-        [39.89179925991729, 32.78378673172111],
-        [39.891812429924926, 32.783780812736495],
-        [39.891826054068105, 32.78379561019855],
-        [39.8918433113119, 32.783792058807194],
-        [39.891850577517886, 32.78377726134508],
-        [39.89186374751566, 32.78377430185324],
-        [39.89186692647982, 32.78379265070578],
-        [39.89187782578642, 32.783804488676026],
-        [39.89190053266725, 32.78380271298033],
-        [39.891909161280694, 32.78378850741677],
-        [39.89190689059282, 32.78376956666477],
-        [39.89192460195372, 32.78376483147724],
-        [39.89193368470157, 32.78374944211657],
-        [39.891932776426785, 32.783710376816344],
-        [39.89191824402977, 32.78369261986245],
-        [39.891904165768096, 32.78369261986245],
-        [39.89189508301638, 32.78357068877435],
-        [39.89190825300557, 32.78356891307968],
-        [39.891920060579764, 32.78354642093723],
-        [39.891916881618044, 32.78351327462158],
-        [39.891904165768096, 32.78350202855091],
-        [39.89190325749291, 32.78348663919027],
-        [39.89194340037088, 32.78345987512711],
-        [39.89192908415467, 32.78329304175344],
-        [39.89206045637465, 32.783266699640905],
-        [39.89205371934435, 32.78319535642217],
-        [39.89208908874849, 32.78318218536646],
-        [39.89207729894889, 32.78308340244709],
-        [39.891892872537, 32.78311742767468],
-        [39.89189371466799, 32.78313279390676],
-        [39.891712656295, 32.783164623958044],
-        [39.89172528828962, 32.783280968284856],
-        [39.891857503031645, 32.78325243099792],
-        [39.891862555819216, 32.78330182245665],
-        [39.89188445122812, 32.783298529693184],
-        [39.89189371466799, 32.78338633673209],
-        [39.891726130422654, 32.78341597160815],
-        [39.89173286748587, 32.78349390035473],
-        [39.89171686696014, 32.783515852114675]
-    ];
+    
 
     // Yüksel Proje Amfisi koordinatları
     const yukselProje: [number, number][] = [
@@ -487,13 +440,7 @@ function initMap(): void {
     }).addTo(map);
     polygons['matematik'] = matematikPolygon;
 
-    const bilgisayarPolygon = L.polygon(bilgisayarBinasi, {
-        color: "#9b59b6",
-        weight: 3,
-        fillColor: "#d2b4de",
-        fillOpacity: 0.4
-    }).addTo(map);
-    polygons['bilgisayar'] = bilgisayarPolygon;
+    
 
     const yukselProjePolygon = L.polygon(yukselProje, {
         color: "#e74c3c",
@@ -2108,18 +2055,14 @@ function initMap(): void {
     async function createPhysicsBuildingPolygon() {
         try {
             const building = await getBuildingById(1);
-            console.log('Çekilen bina verisi:', building);
             
             if (!building || !building.polygon_koordinatları) {
                 console.error('Bina verisi veya koordinatlar bulunamadı');
                 return;
             }
 
-            console.log('Ham koordinat verisi:', building.polygon_koordinatları);
             const coordinates = JSON.parse(building.polygon_koordinatları);
-            console.log('Koordinat sayısı:', coordinates.length);
-            console.log('İlk koordinat:', coordinates[0]);
-            console.log('Son koordinat:', coordinates[coordinates.length - 1]);
+            
 
             const polygon = L.polygon(coordinates, {
                 color: 'blue',
@@ -2129,7 +2072,45 @@ function initMap(): void {
             }).addTo(map);
 
             polygons['fizik'] = polygon;
-            console.log('Polygon oluşturuldu ve haritaya eklendi');
+            
+
+            // Click event handler ekle
+            polygon.on('click', () => {
+                showBuildingInfo(building);
+            });
+        } catch (error) {
+            console.error('Polygon oluşturulurken hata:', error);
+        }
+    }
+    // CENG Binası polygon'u oluştur
+    async function createCENGBuildingPolygon() {
+        try {
+            const building = await getBuildingById(4);
+            
+            
+            if (!building || !building.polygon_koordinatları) {
+                console.error('Bina verisi veya koordinatlar bulunamadı');
+                return;
+            }
+
+            
+            const coordinates = JSON.parse(building.polygon_koordinatları);
+            
+
+            const polygon = L.polygon(coordinates, {
+                color: 'blue',
+                weight: 3,
+                fillColor: 'blue',
+                fillOpacity: 0.2
+            }).addTo(map);
+
+            polygons['bilgisayar'] = polygon;
+            
+
+            // Click event handler ekle
+            polygon.on('click', () => {
+                showBuildingInfo(building);
+            });
         } catch (error) {
             console.error('Polygon oluşturulurken hata:', error);
         }
@@ -2139,32 +2120,111 @@ function initMap(): void {
     function showBuildingInfo(building: Building) {
       const modal = document.getElementById('buildingModal');
       const modalTitle = document.getElementById('buildingTitle');
-      const modalContent = document.getElementById('buildingContent');
+      const salonTableBody = document.getElementById('salonTableBody');
+      const erisilebilirlikTableBody = document.getElementById('erisilebilirlikTableBody');
+      const kantinTableBody = document.getElementById('kantinTableBody');
+      const geriDonusumTableBody = document.getElementById('geriDonusumTableBody');
 
-      if (!modal || !modalTitle || !modalContent) {
+      if (!modal || !modalTitle || !salonTableBody || !erisilebilirlikTableBody || 
+          !kantinTableBody || !geriDonusumTableBody) {
         console.error('Modal elementleri bulunamadı');
         return;
       }
 
       modalTitle.textContent = building.bina_adi;
-      modalContent.innerHTML = `
-        <p><strong>Çalışma Salonları:</strong> ${building.calısma_salonlari}</p>
-        <p><strong>Kapasiteler:</strong> ${building.calısma_salonlari_kapasiteler}</p>
-        <p><strong>Bölüme Özel Alanlar:</strong> ${building.calısma_salonlari_bölüm_özel}</p>
-        <p><strong>PC Durumu:</strong> ${building.calısma_salonlari_pc}</p>
-        <p><strong>Asansör Sayısı:</strong> ${building.asansor_sayisi}</p>
-        <p><strong>Rampa Sayısı:</strong> ${building.rampa_sayisi}</p>
-        <p><strong>Erişilebilirlik Derecesi:</strong> ${building.erisilebilirlik_derecesi}</p>
-        <p><strong>Geri Dönüşüm Kutuları:</strong> ${building.geri_dönüsüm_kutuları}</p>
-        <p><strong>Kantin Menüsü:</strong> ${building.kantin_menu}</p>
-        <p><strong>Otomat Sayısı:</strong> ${building.otomat_sayisi}</p>
+
+      // Çalışma salonları verilerini array'e çevir
+      const salonlar = building.calısma_salonlari.split(', ').filter(Boolean);
+      const kapasiteler = building.calısma_salonlari_kapasiteler.split(', ').filter(Boolean);
+      const bolumOzel = building.calısma_salonlari_bölüm_özel.split(', ').filter(Boolean);
+      const pcDurumu = building.calısma_salonlari_pc.split(', ').filter(Boolean);
+
+      // En uzun array'in uzunluğunu bul
+      const maxLength = Math.max(
+        salonlar.length,
+        kapasiteler.length,
+        bolumOzel.length,
+        pcDurumu.length
+      );
+
+      // Tablo içeriklerini temizle
+      salonTableBody.innerHTML = '';
+      erisilebilirlikTableBody.innerHTML = '';
+      kantinTableBody.innerHTML = '';
+      geriDonusumTableBody.innerHTML = '';
+
+      // Çalışma salonları tablosunu doldur
+      for (let i = 0; i < maxLength; i++) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${salonlar[i] || '-'}</td>
+          <td>${kapasiteler[i] || '-'}</td>
+          <td>${bolumOzel[i] || '-'}</td>
+          <td>${pcDurumu[i] || '-'}</td>
+        `;
+        salonTableBody.appendChild(row);
+      }
+
+      // Erişilebilirlik tablosunu doldur
+      const erisilebilirlikRow = document.createElement('tr');
+      erisilebilirlikRow.innerHTML = `
+        <td>${building.asansor_sayisi || '-'}</td>
+        <td>${building.rampa_sayisi || '-'}</td>
+        <td>${building.erisilebilirlik_derecesi || '-'}</td>
       `;
+      erisilebilirlikTableBody.appendChild(erisilebilirlikRow);
+
+      // Kantin tablosunu doldur
+      const kantinRow = document.createElement('tr');
+      kantinRow.innerHTML = `
+        <td>${building.kantin_menu || '-'}</td>
+        <td>${building.otomat_sayisi || '-'}</td>
+      `;
+      kantinTableBody.appendChild(kantinRow);
+
+      // Geri dönüşüm tablosunu doldur
+      const geriDonusumRow = document.createElement('tr');
+      geriDonusumRow.innerHTML = `
+        <td>${building.geri_dönüsüm_kutuları || '-'}</td>
+      `;
+      geriDonusumTableBody.appendChild(geriDonusumRow);
 
       modal.style.display = 'block';
+      overlay.style.display = 'block';
+
+      // Sidebar toggle işlevselliği
+      const sidebar = document.querySelector('.modal-sidebar');
+      const toggleButton = document.querySelector('.sidebar-toggle');
+      const menuItems = document.querySelectorAll('.menu-item');
+      const pages = document.querySelectorAll('.modal-page');
+
+      toggleButton?.addEventListener('click', () => {
+        sidebar?.classList.toggle('collapsed');
+      });
+
+      menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+          // Aktif menü öğesini güncelle
+          menuItems.forEach(mi => mi.classList.remove('active'));
+          item.classList.add('active');
+
+          // İlgili sayfayı göster
+          const pageId = item.getAttribute('data-page');
+          pages.forEach(page => {
+            page.classList.remove('active');
+            if (page.id === pageId) {
+              page.classList.add('active');
+            }
+          });
+        });
+      });
     }
 
     // Sayfa yüklendiğinde polygon'u oluştur
     createPhysicsBuildingPolygon();
+    showAllPolygons();
+    createCENGBuildingPolygon();
+    
 }
 
 // Sayfa yüklendiğinde haritayı başlat
