@@ -1,10 +1,10 @@
 -- Binalar tablosu
 CREATE TABLE IF NOT EXISTS buildings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    bina_adi TEXT NOT NULL,           -- Bina adı
+    bina_adi TEXT NOT NULL,           
     calısma_salonlari TEXT NOT NULL,       
-    calısma_salonlari_kapasiteler TEXT NOT NULL,      -- Boylam
-    calısma_salonlari_bölüm_özel TEXT NOT NULL,             -- Bina açıklaması
+    calısma_salonlari_kapasiteler TEXT NOT NULL,      
+    calısma_salonlari_bölüm_özel TEXT NOT NULL,             
     calısma_salonlari_pc TEXT NOT NULL,
     asansor_sayisi INTEGER NOT NULL,
     rampa_sayisi INTEGER NOT NULL,

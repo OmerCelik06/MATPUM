@@ -182,6 +182,7 @@ header h1 {
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 20px;
 }
 
 .close {
@@ -251,5 +252,144 @@ footer {
     
     #modalDescription {
         font-size: 1.1rem;
+    }
+}
+
+/* Modal Table Styles */
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.info-table th,
+.info-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #333;
+}
+
+.info-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.modal-page {
+    padding: 20px;
+}
+
+#buildingContent {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.modal-container {
+    display: flex;
+    height: calc(100% - 60px);
+    margin-top: 20px;
+}
+
+.modal-sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    position: relative;
+    transition: width 0.3s ease;
+}
+
+.modal-sidebar.collapsed {
+    width: 50px;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    right: -15px;
+    top: 10px;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.sidebar-menu {
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-item {
+    padding: 12px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-item:hover {
+    background-color: #e9ecef;
+}
+
+.menu-item.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-sidebar.collapsed .menu-item {
+    padding: 12px 5px;
+    text-align: center;
+}
+
+.modal-sidebar.collapsed .menu-item span {
+    display: none;
+}
+
+#buildingContent {
+    flex: 1;
+    padding: 0 20px;
+    overflow-y: auto;
+}
+
+.modal-page {
+    display: none;
+}
+
+.modal-page.active {
+    display: block;
+}
+
+/* Responsive design için güncellemeler */
+@media (max-width: 768px) {
+    .modal-sidebar {
+        width: 200px;
+    }
+    
+    .modal-sidebar.collapsed {
+        width: 40px;
+    }
+    
+    .sidebar-toggle {
+        width: 25px;
+        height: 25px;
+        right: -12px;
     }
 } 
